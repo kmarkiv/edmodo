@@ -134,7 +134,7 @@ def home():
         user = "teacher@demo.com"
     else:
         user = "student1@demo.com"
-    return render_template('views/login.html', user=user, password=password)
+    return render_template('views/login.html', user=user, password=password,title="Login")
 
 
 # login page
@@ -182,7 +182,7 @@ def teachers():
     essay = db.execute(
         "SELECT *,CASE WHEN CURDATE() > due_date THEN 1 ELSE 0 END as past_due FROM homeworks WHERE "
         "teacher_id=%s" % current_user.data.id)
-    return render_template('views/teachers/home.html', essays=essay)
+    return render_template('views/teachers/home.html', essays=essay,title="Homeworks")
 
 
 # Home work
@@ -203,7 +203,7 @@ def teachers_homework(homework_id):
               homework_id, homework_id)
     essay = db.execute(sql
                        )
-    return render_template('views/teachers/homeworks.html', essays=essay, homework=homework)
+    return render_template('views/teachers/homeworks.html', essays=essay, homework=homework,title=homework.title)
 
 
 @app.route('/teachers/homework/<homework_id>/student/<student_id>')
@@ -220,7 +220,7 @@ def teachers_homework_student(homework_id, student_id):
               homework_id, student_id)
     essay = db.execute(sql
                        )
-    return render_template('views/teachers/submissions.html', essays=essay, homework=homework, users=users)
+    return render_template('views/teachers/submissions.html', essays=essay, homework=homework, users=users,title=users.name)
 
 
 @app.route('/students')
@@ -234,7 +234,7 @@ def students():
               current_user.data.id)
     essay = db.execute(sql
                        )
-    return render_template('views/students/home.html', essays=essay)
+    return render_template('views/students/home.html', essays=essay,title="My Homework")
 
 
 @app.route('/students/homework/<homework_id>')
@@ -249,7 +249,7 @@ def students_homework(homework_id):
               homework_id, current_user.data.id)
     essay = db.execute(sql)
 
-    return render_template('views/students/submissions.html', essays=essay, homework=homework)
+    return render_template('views/students/submissions.html', essays=essay, homework=homework,title=homework.title)
 
 
 @app.route('/students/homework/<homework_id>/post', methods=["POST"])
