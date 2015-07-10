@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <div class="col-lg-10 well body" >
+        <h1>{{ homework.title }}</h1>
+        <h4>Question: {{ homework.question }}</h4>
+        <h4>User: {{ users.name }}</h4>
+        {% if essays.rowcount >0 %}
+            <table class="table table-striped table-hover " id="table">
+                <thead>
+                <tr>
+
+
+                    <th>Answers</th>
+                    <th>Activity</th>
+                    <th>Answer id</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for item in essays %}
+                    <tr>
+                        <td>{{ item.submission }}</td>
+                        <td><abbr class="timeago" title="{{ item.updated_at }}">{{ item.updated_at }}</abbr>
+
+                        </td>
+                        <td>
+                            {{ item.id }}
+                        </td>
+
+
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        {% else %}
+            <br>
+            <h2>No Submissions :(</h2>
+        {% endif %}
+    </div>
+{% endblock %}

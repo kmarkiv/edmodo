@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="container">
+        <div class="row" style="margin-top: 60px;">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-login">
+                    <div class="panel-body">
+                        <div class="row login-row">
+                            <img src="/static/logo-blue.png"/><br>
+                            <h3>Edmodo Interview</h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-login">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form id="login-form" action="/login/check" method="post" role="form"
+                                      style="display: block;">
+                                    <div class="form-group">
+                                        <input type="text" name="email" id="username" tabindex="1" class="form-control"
+                                               placeholder="Username" value="{{ user }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="password" id="password" tabindex="2"
+                                               class="form-control" placeholder="Password" value="{{ password }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <a href="/?role=teacher" class="login-a">I'm a teacher</a> <a href="/?role=student" class="login-a">Student login</a>
+                                            <div class="col-sm-3 pull-right">
+                                                <input type="submit" name="login-submit" id="login-submit" tabindex="2"
+                                                       class="form-control btn btn-login btn-material-blue-800" value="Log In">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

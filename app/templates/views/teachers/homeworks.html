@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+    <div class="col-lg-10 well body" >
+      <h1>{{ homework.title }}</h1>
+        <h4>Question: {{ homework.question }}</h4>
+     {% if essays.rowcount >0 %}
+        <table class="table table-striped table-hover " id="table">
+            <thead>
+            <tr>
+                <th>Student</th>
+                  <th>Answers</th>
+                <th>Activity</th>
+                <th>Answer id</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for item in essays %}
+                <tr>
+                    <td><a href="/teachers/homework/{{ item.homework_id }}/student/{{ item.student_id }}">{{ item.name }}</a></td>
+
+                     {% if item.submits>0 %}
+                          <td>{{ item.submission }}</td>
+
+
+                    {% else %}
+                          <td class="btn-material-red-50"
+                            title="Not submitted"> -
+                        </td>
+
+                    {% endif %}
+                    <td><abbr class="timeago" title="{{ item.updated_at }}">{{ item.updated_at }}</abbr>
+
+                    </td>
+                    <td>
+                        {{ item.id }}
+                    </td>
+
+
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+     {% else %}
+         <br>
+           <h2>No Submissions :(</h2>
+        {% endif %}
+    </div>
+{% endblock %}

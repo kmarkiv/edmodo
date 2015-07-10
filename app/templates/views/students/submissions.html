@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+    <div class="col-lg-10 well body" >
+        <h1>{{ homework.title }}</h1>
+        <h4>Question: {{ homework.question }}</h4>
+        Time:<span>{{ homework.due_date.strftime('%d/%m/%Y') }}</span>
+        {% if essays.rowcount >0 %}
+            {% include "views/students/submit_form.html" %}
+            <table class="table table-striped table-hover " id="table">
+                <thead>
+                <tr>
+
+                    <th>My answers</th>
+                    <th>Activity</th>
+                    <th>Answer id</th>
+                </tr>
+                </thead>
+                <tbody>
+
+
+                {% for item in essays %}
+                    <tr>
+                        <td>{{ item.submission }}</td>
+                        <td><abbr class="timeago" title="{{ item.updated_at }}">{{ item.updated_at }}</abbr>
+
+                        </td>
+                        <td>
+                            {{ item.id }}
+                        </td>
+
+
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        {% else %}
+            {% if not homework.past_due %}
+                {% include "views/students/submit_form.html" %}
+            {% else %}
+                <br>
+                <h4>Due date reached :( </h4>
+            {% endif %}
+        {% endif %}
+
+
+    </div>
+{% endblock %}
