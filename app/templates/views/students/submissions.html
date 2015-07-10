@@ -2,10 +2,23 @@
 {% block body %}
 
 
-    <div class="col-lg-10 well body" >
+    <div class="col-lg-10 well body">
+        {% with msgs = get_flashed_messages() %}
+            {% if msgs %}
+                {%- for msg in msgs %}
+                    <div class="alert alert-info">
+                        {{ msg }}
+                    </div>
+                {% endfor -%}
+            {% else %}
+
+            {% endif %}
+        {% endwith %}
         <h1>{{ homework.title }}</h1>
         <h4>Question: {{ homework.question }}</h4>
-        Time:<span>{{ homework.due_date.strftime('%d/%m/%Y') }}</span>
+        Due:<span>{{ homework.due_date.strftime('%d/%m/%Y') }}</span>
+
+
         {% if essays.rowcount >0 %}
             {% include "views/students/submit_form.html" %}
             <table class="table table-striped table-hover " id="table">

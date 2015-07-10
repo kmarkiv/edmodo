@@ -1,0 +1,7 @@
+Flask==0.10.1
+Flask-Login==0.2.10
+Flask-SQLAlchemy==1.0
+SQLAlchemy==0.9.3
+Jinja2==2.7.3
+iniparse==0.4
+
