@@ -13,3 +13,5 @@ Update configuration in https://github.com/kmarkiv/edmodo/blob/master/app/app.py
 cd app
 
 python app.py -e dev
+
+You can also see a demo at edmodo.kmarkiv.com
