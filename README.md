@@ -9,9 +9,8 @@ pip install -r requirements.txt
 
 Update configuration in https://github.com/kmarkiv/edmodo/blob/master/app/app.py#L69
 
+cd spotlight
 
-cd app
-
-python app.py -e dev
+python web_app.py -e dev
 
 You can also see a demo at edmodo.kmarkiv.com
