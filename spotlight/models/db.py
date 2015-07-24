@@ -12,6 +12,19 @@ class Db:
         self.db = Session(engine)
 
     def get_data(self, sql):
-        a = self.db.execute(sql)
-        data = [dict(r) for r in a]
+        try:
+            # converting result proxy to a dictionary
+            results = self.db.execute(sql)
+            return self.get_dict_data(results)
+        except Exception as e:
+            return []
+
+    def get_dict_data(self, results):
+        data = [dict(r) for r in results]
         return data
+
+    def sanitize_int(self, data):
+        try:
+            return int(data)
+        except Exception as e:
+            return 0

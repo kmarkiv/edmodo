@@ -29,11 +29,11 @@
         </div>
         <div class="col-sm-8 col-md-8">
             <form class="navbar-form form-xlarge  ng-pristine ng-valid" method="post" id="form-place"
-                  ng-submit="submit()" ng-controller="contactController"
+                  ng-submit="submit()" ng-controller="searchController"
                   autocomplete="on">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search for an app" name="search"
-                           id="searchTextField" style="display: inline-block;" autofocus=""
+                           id="search" style="" autofocus=""
                            ng-model="term"
 
                            autocomplete="off">
@@ -48,13 +48,11 @@
 
             </form>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#flags"><i class="fa fa-home"></i> Flags</a></li>
 
-        </ul>
 
     </div>
-    <div class=" well " style="margin-bottom: 0px">
+    <div class="well nav-div">
+        <a href="#flags" class="btn btn-primary pull-right"><i class="fa fa-flag"></i> Flags</a>
         <form method="post">
             <fieldset>
 
@@ -68,7 +66,7 @@
                                 ng-model="predicate"
                                 >
                             <option value="">Relevance</option>
-                            <option value="id">Recency</option>
+                            <option value="-id">Recency</option>
                             <option value="-avg_rating">Customer Review</option>
                             <option value="price">Price: Low to high</option>
                             <option value="-price">Price: High to low</option>
@@ -83,10 +81,11 @@
             </fieldset>
         </form>
 
+
     </div>
 </div>
 
-<div style="margin-top: 130px;">
+<div class="loading-div">
     <div class="loading" ng-show="loading==true">
         <div class="col-md-2 col-md-offset-5">
 
@@ -101,33 +100,33 @@
 
     </div>
 </div>
-
+{%  raw %}
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <div class="modal-content" ng-controller="modalController">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">{{ item.title }}</h4>
+                <h4 class="modal-title">{{ app.title }}</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <img data-src="{{ item.img_path }}" style="height: 150px; width: 150px; display: block;"
-                             ng-src="{{ item.img_path }}"
-                             alt="{{ item.title }}"
+                        <img data-src="{{ app.img_path }}" class="modal-img"
+                             ng-src="{{ app.img_path }}"
+                             alt="{{ app.title }}"
                              src="http://media-market.edmodo.com/media/public/148a00ce808f0ba203c6d343e5687b2b97e0eef2.jpeg"
                              data-holder-rendered="true">
                     </div>
-                    <div class="col-md-8" style="height: 150px;overflow-y: scroll;">
-                        <pre>{{ item.long_desc }}.</pre>
+                    <div class="col-md-8 modal-desc">
+                        <pre>{{ app.long_desc }}.</pre>
                     </div>
                 </div>
 
 
                 <hr>
 
-                <div class="sample1">
+
                     <h4>Flag app</h4>
 
                     <div class="checkbox" ng-repeat="flag in flags">
@@ -141,10 +140,10 @@
 
                 </div>
 
-            </div>
+
             <div class="modal-footer">
-                <a ng-click="submit(item.id)" class="btn btn-primary  btn-material-blue-800 pull-left"
-                   style="margin-left: 15px;">Submit</a>
+                <a ng-click="submit(app.id)" class="btn btn-primary modal-submit btn-material-blue-800 pull-left"
+                        >Submit</a>
 
             </div>
         </div>
@@ -152,6 +151,7 @@
 
     </div>
 </div>
+{% endraw %}
 <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="/static/js/ripples.min.js"></script>

@@ -1,9 +1,10 @@
-<div class="row" style="padding: 20px;margin-top: 20px;">
+<div class="row app-row">
+
     <div class="col-sm-5 col-md-2  " ng-repeat="app in apps | orderBy:predicate:reverse ">
-        <div class="thumbnail" style="padding: 0px!important;">
+        <div class="thumbnail app-thumb">
 
 
-            <img data-src="{{ app.img_path }}" style="height: 150px; width: 100%; display: block;"
+            <img data-src="{{ app.img_path }}" class="app-img"
                  ng-src="{{ app.img_path }}"
                  alt="{{ app.title }}"
                  src="http://media-market.edmodo.com/media/public/148a00ce808f0ba203c6d343e5687b2b97e0eef2.jpeg"
@@ -27,4 +28,12 @@
             </div>
         </div>
     </div>
+
+    <div ng-if="apps.length<=0 ">
+        <div class="jumbotron text-center">
+            <h1>No Results :(</h1>
+        </div>
+    </div>
+
+
 </div>

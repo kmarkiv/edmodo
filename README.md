@@ -1,13 +1,13 @@
 # edmodo
 Edmodo Interview
 
-Load the database file edmodo_interview.sql into your local database
+Load the database file spotlight/edmodo_spotlight_interview.sql into your local database
 
 Install dependencies from requirements.txt
 
 pip install -r requirements.txt
 
-Update configuration in https://github.com/kmarkiv/edmodo/blob/master/app/app.py#L69
+Update configuration in spotlight/config.ini
 
 cd spotlight
 

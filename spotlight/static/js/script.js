@@ -3,18 +3,18 @@
  */
 // script.js
 
-// create the module and name it scotchApp
+// create the module and name it spotApp
 // also include ngRoute for all our routing needs
-var scotchApp = angular.module('myNoteApp', ['ngRoute', "checklist-model"]);
+var spotApp = angular.module('myNoteApp', ['ngRoute', "checklist-model"]);
 
-scotchApp.run(function ($rootScope) {
+spotApp.run(function ($rootScope) {
 
     $rootScope.loading = true;
     $rootScope.apps = [];
-    $rootScope.item = {};
+    $rootScope.app = {};
 
     $rootScope.setItem = function (item) {
-        $rootScope.item = item;
+        $rootScope.app = item;
         $('#myModal').modal('show');
     };
 
@@ -22,7 +22,7 @@ scotchApp.run(function ($rootScope) {
 });
 
 // configure our routes
-scotchApp.config(function ($routeProvider) {
+spotApp.config(function ($routeProvider) {
     $routeProvider
 
         // route for the home page
@@ -31,13 +31,13 @@ scotchApp.config(function ($routeProvider) {
             controller: 'mainController'
         })
 
-        // route for the about page
+        // route for the app page
         .when('/apps/users/:user_id', {
             templateUrl: '/static/pages/home.html',
-            controller: 'aboutController'
+            controller: 'appController'
         })
 
-        // route for the contact page
+        // route for the flags page
         .when('/flags', {
             templateUrl: '/static/pages/flags.html',
             controller: 'flagsController'
@@ -45,11 +45,10 @@ scotchApp.config(function ($routeProvider) {
 });
 
 // create the controller and inject Angular's $scope
-scotchApp.controller('mainController', function ($scope, $rootScope, $http) {
+spotApp.controller('mainController', function ($scope, $rootScope, $http) {
     // create a message to display in our view
 
-
-    $scope.sayHello = function () {
+    $scope.init = function () {
         $http.get('/api/apps').
             success(function (data, status, headers, config) {
                 // this callback will be called asynchronously
@@ -63,15 +62,14 @@ scotchApp.controller('mainController', function ($scope, $rootScope, $http) {
             });
     };
 
-    $scope.message = 'Everyone come and see how good I look!';
     $rootScope.loading = true;
-    $scope.sayHello();
+    $scope.init();
 
 
 });
 
-scotchApp.controller('aboutController', function ($scope, $rootScope, $http, $routeParams) {
-    $scope.sayHello = function () {
+spotApp.controller('appController', function ($scope, $rootScope, $http, $routeParams) {
+    $scope.init = function () {
         $http.get('/api/apps/users/' + $routeParams.user_id).
             success(function (data, status, headers, config) {
                 // this callback will be called asynchronously
@@ -85,15 +83,15 @@ scotchApp.controller('aboutController', function ($scope, $rootScope, $http, $ro
             });
     };
 
-    $scope.message = 'Everyone come and see how good I look!';
     $rootScope.loading = true;
-    $scope.sayHello();
+    $scope.init();
 });
 
-scotchApp.controller('contactController', function ($scope, $rootScope, $http) {
+spotApp.controller('searchController', function ($scope, $rootScope, $http) {
 
-    $rootScope.loading = true;
+
     $scope.submit = function () {
+        $rootScope.loading = true;
         $http({
             url: '/api/apps/search',
             method: "GET",
@@ -110,7 +108,7 @@ scotchApp.controller('contactController', function ($scope, $rootScope, $http) {
 
 });
 
-scotchApp.controller('flagsController', function ($scope, $rootScope, $http) {
+spotApp.controller('flagsController', function ($scope, $rootScope, $http) {
 
     $rootScope.loading = true;
     $scope.init = function () {
@@ -132,7 +130,7 @@ scotchApp.controller('flagsController', function ($scope, $rootScope, $http) {
 
 });
 
-scotchApp.controller('modalController', function ($scope, $rootScope, $http) {
+spotApp.controller('modalController', function ($scope, $rootScope, $http) {
     $scope.flags = [
         {id: 1, text: 'Inappropriate'},
         {id: 2, text: 'Not helpful'},
@@ -148,7 +146,7 @@ scotchApp.controller('modalController', function ($scope, $rootScope, $http) {
         });
     };
     $scope.uncheckAll = function () {
-        $scope.app_flags.roles = [];
+        $scope.app_flags.flags = [];
     };
 
     $scope.submit = function (app_id) {
@@ -159,7 +157,8 @@ scotchApp.controller('modalController', function ($scope, $rootScope, $http) {
             data: $.param({'flags[]': $scope.app_flags.flags, app_id: app_id}),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (data, status, headers, config) {
-            //  $('#myModal').modal('close');
+            $('#myModal').modal('hide');
+            $scope.uncheckAll();
 
         }).
             error(function (data, status, headers, config) {
@@ -170,7 +169,7 @@ scotchApp.controller('modalController', function ($scope, $rootScope, $http) {
 });
 
 
-scotchApp.directive('starRating', function () {
+spotApp.directive('starRating', function () {
     return {
         restrict: 'A',
         template: '<i  ng-repeat="star in stars" ng-class="{true:\'fa fa-star\', false:\'fa fa-star-o\'}[star.filled]" ></i>',

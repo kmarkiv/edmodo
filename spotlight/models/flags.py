@@ -4,6 +4,7 @@ from db import Db
 
 
 class Flags(Db):
+
     def add_data(self, app_id, flags):
         essay_drafts = self.base.classes.spotlight_apps_flags
         for flag in flags:
@@ -14,5 +15,5 @@ class Flags(Db):
 
     def get_list(self):
         sql = "SELECT a.*,f.flag,af.id as fid FROM spotlight_apps_flags af,spotlight_apps a,spotlight_flags f " \
-              "WHERE a.id=af.app_id AND af.flag_id=f.id"
+              "WHERE a.id=af.app_id AND af.flag_id=f.id ORDER BY af.id DESC "
         return self.get_data(sql)
